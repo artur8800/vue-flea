@@ -22,11 +22,17 @@ export default {
           name,
           email
         });
-        firebase
+        await firebase
           .storage()
           .ref()
           .child(`/${uid}/user_img/profile/${photo.name}`)
           .put(photo);
+        const imgSrc = await firebase
+          .storage()
+          .ref()
+          .child(`/${uid}/user_img/profile/${photo.name}`)
+          .getDownloadURL();
+        commit("setImage", imgSrc);
       } catch (e) {
         commit("setError", e);
         throw e;
@@ -47,6 +53,20 @@ export default {
         commit("setUserData", userData);
       } catch (e) {
         console.log(e);
+        throw e;
+      }
+    },
+    async fetchImage({ dispatch, commit }) {
+      try {
+        const uid = await dispatch("getUid");
+
+        const userImage = await firebase
+          .storage()
+          .ref()
+          .child(`/${uid}/user_img/profile/`);
+
+        console.log(userImage);
+      } catch (e) {
         throw e;
       }
     }

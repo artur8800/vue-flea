@@ -8,7 +8,7 @@
       <div class="nav-user valign-wrapper right">
         <span class="user_name white-text">{{userData.name}}</span>
 
-        <img src="img/technik.jpg" alt class="user_photo circle" />
+        <img :src="userImage" alt class="user_photo circle" />
         <!-- notice the "circle" class -->
       </div>
     </div>
@@ -21,11 +21,11 @@ import { mapGetters } from "vuex";
 export default {
   name: "Navbar",
   computed: {
-    ...mapGetters(["userData"])
+    ...mapGetters(["userData", "userImage"])
   },
   async mounted() {
     await this.$store.dispatch("fetchUserInfo");
-    console.log();
+    await this.$store.dispatch("fetchImage");
   }
 };
 </script>
