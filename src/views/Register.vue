@@ -66,7 +66,6 @@
           </div>
           <button class="waves-effect waves-light btn login" type="submit">Register</button>
         </form>
-        <div class="modal-footer clearfix"></div>
       </div>
     </div>
   </div>
