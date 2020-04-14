@@ -36,6 +36,19 @@ export default {
       const user = firebase.auth().currentUser;
       console.log(user);
       return user ? user.uid : null;
+    },
+    async fetchUserInfo({ dispatch, commit }) {
+      try {
+        const uid = await dispatch("getUid");
+        const userData = (await firebase
+          .database()
+          .ref(`users/${uid}/user_info`)
+          .once("value")).val();
+        commit("setUserData", userData);
+      } catch (e) {
+        console.log(e);
+        throw e;
+      }
     }
   }
 };
