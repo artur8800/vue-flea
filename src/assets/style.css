@@ -1,0 +1,88 @@
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.app-wrapper {
+  padding: 0 15px;
+}
+.nav-wrapper {
+  padding: 0 32px;
+}
+
+.user_name {
+  padding-right: 12px;
+}
+
+.sidenav-trigger,
+#sideTrigger {
+  display: block;
+}
+
+img.user_photo {
+  width: 45px;
+  height: 45px;
+}
+
+.main__user_info {
+  padding-top: 40px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(35, 33, 33, 0.4);
+}
+
+.modal {
+  position: relative;
+  display: block;
+  width: 500px;
+  max-height: 400px;
+  z-index: 1003;
+  opacity: 1;
+  top: 10%;
+  transform: scaleX(1) scaleY(1);
+}
+
+.modal-content {
+  position: relative;
+}
+
+.empty-layout {
+  padding-top: 90px;
+  height: 100vh;
+}
+
+.modal .modal-footer {
+  padding: 24px;
+}
+
+button.login {
+  float: left;
+}
+
+.clearfix::after,
+.clearfix {
+  content: "";
+  clear: both;
+  display: table;
+}
+.app-container {
+  padding: 24px;
+}
+
+.card {
+  margin-bottom: 0;
+}
+
+div.card.post__container {
+  margin-bottom: 6rem;
+}
