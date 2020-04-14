@@ -25,7 +25,7 @@ export default {
         firebase
           .storage()
           .ref()
-          .child(`/users/${uid}/user_info/${photo.name}`)
+          .child(`/${uid}/user_img/profile/${photo.name}`)
           .put(photo);
       } catch (e) {
         commit("setError", e);
