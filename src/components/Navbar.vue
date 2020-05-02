@@ -6,9 +6,13 @@
       </a>
 
       <div class="nav-user valign-wrapper right">
-        <span class="user_name white-text">{{userData.name}}</span>
+        <span class="user_name white-text">{{name}}</span>
 
-        <img :src="userImage" alt class="user_photo circle" />
+        <img :src="this.photo" alt class="user_photo circle" />
+
+        <a href="#" class="black-text" @click.prevent="logout">
+          <i class="material-icons">assignment_return</i>Выйти
+        </a>
         <!-- notice the "circle" class -->
       </div>
     </div>
@@ -20,15 +24,21 @@
 import { mapGetters } from "vuex";
 export default {
   name: "Navbar",
+  data: () => ({
+    name: "",
+    photo: null
+  }),
   computed: {
     ...mapGetters(["userData", "userImage"])
   },
   async mounted() {
-    await this.$store.dispatch("fetchUserInfo");
     await this.$store.dispatch("fetchImage");
+    await this.$store.dispatch("fetchFromCloud");
+    this.name = await this.userData;
+    this.photo = await this.userImage;
   }
 };
 </script>
 
 <style>
-</style>
+</style>  

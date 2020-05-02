@@ -1,9 +1,12 @@
 import firebase from "firebase/app";
 import "firebase/storage";
+import "firebase/firestore";
+import db from "../main";
+import firebaseUtil from "../utils/firebase.util";
 
 export default {
   actions: {
-    async login({ dispatch, commit }, { email, password }) {
+    async login({ commit }, { email, password }) {
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
         console.log("sendin");
@@ -13,8 +16,6 @@ export default {
       }
     },
     async register({ dispatch, commit }, { name, email, password, photo }) {
-      const timestamp = Number(new Date());
-
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password);
         const uid = await dispatch("getUid");
@@ -27,12 +28,12 @@ export default {
           .ref()
           .child(`/${uid}/user_img/profile/${photo.name}`)
           .put(photo);
-        const imgSrc = await firebase
-          .storage()
-          .ref()
-          .child(`/${uid}/user_img/profile/${photo.name}`)
-          .getDownloadURL();
-        commit("setImage", imgSrc);
+        await db.collection(`/${uid}/user/info`).add({
+          name,
+          email,
+          url: photo.name,
+          dowloadUrl: await firebaseUtil.childImageRef(firebase, uid, photo)
+        });
       } catch (e) {
         commit("setError", e);
         throw e;
@@ -40,35 +41,41 @@ export default {
     },
     getUid() {
       const user = firebase.auth().currentUser;
-      console.log(user);
       return user ? user.uid : null;
     },
-    async fetchUserInfo({ dispatch, commit }) {
+    // async fetchUserInfo({ dispatch, commit }) {
+    //   try {
+    //     const uid = await dispatch("getUid");
+    //     const userData = (await firebase
+    //       .database()
+    //       .ref(`users/${uid}/user_info`)
+    //       .once("value")).val();
+    //     commit("setUserData", userData);
+    //   } catch (e) {
+    //     console.log(e);
+    //     throw e;
+    //   }
+    // },
+    async fetchImage({ dispatch, commit }) {
       try {
         const uid = await dispatch("getUid");
-        const userData = (await firebase
-          .database()
-          .ref(`users/${uid}/user_info`)
-          .once("value")).val();
-        commit("setUserData", userData);
+        console.log();
+        let storageRef = await firebaseUtil.profileImageRef(firebase, uid);
+        let refList = await storageRef.listAll();
+        let fullpath = refList.items[0].getDownloadURL();
+        commit("setImage", fullpath);
       } catch (e) {
         console.log(e);
         throw e;
       }
     },
-    async fetchImage({ dispatch, commit }) {
-      try {
-        const uid = await dispatch("getUid");
-
-        const userImage = await firebase
-          .storage()
-          .ref()
-          .child(`/${uid}/user_img/profile/`);
-
-        console.log(userImage);
-      } catch (e) {
-        throw e;
-      }
+    async fetchFromCloud({ dispatch, commit }) {
+      const uid = await dispatch("getUid");
+      await db.collection(`${uid}/user/info`).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          commit("setUserData", `${doc.data().name}`);
+        });
+      });
     }
   }
 };
