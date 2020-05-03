@@ -36,7 +36,6 @@ export default {
         });
       } catch (err) {
         commit("setError", err);
-        console.log(this);
         throw err;
       }
     },
@@ -44,19 +43,7 @@ export default {
       const user = firebase.auth().currentUser;
       return user ? user.uid : null;
     },
-    // async fetchUserInfo({ dispatch, commit }) {
-    //   try {
-    //     const uid = await dispatch("getUid");
-    //     const userData = (await firebase
-    //       .database()
-    //       .ref(`users/${uid}/user_info`)
-    //       .once("value")).val();
-    //     commit("setUserData", userData);
-    //   } catch (e) {
-    //     console.log(e);
-    //     throw e;
-    //   }
-    // },
+
     async fetchImage({ dispatch, commit }) {
       try {
         const uid = await dispatch("getUid");

@@ -67,6 +67,12 @@
           <button class="waves-effect waves-light btn login" type="submit">Register</button>
         </form>
       </div>
+      <div class="modal-footer clearfix">
+        <p>
+          If you have account
+          <a href="/login">Log in</a>
+        </p>
+      </div>
     </div>
   </div>
 </template>

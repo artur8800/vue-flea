@@ -91,9 +91,8 @@ export default {
       };
       try {
         await this.$store.dispatch("login", formData);
-        this.$error = this.errorMessage;
-
         this.$router.push("/");
+        this.$message(messages.auth);
       } catch (e) {
         console.log(e);
       }

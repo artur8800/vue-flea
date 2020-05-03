@@ -12,15 +12,6 @@
             <label for="post_title">Post title</label>
           </div>
 
-          <div class="input-field">
-            <select>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-            </select>
-            <label>Select post category</label>
-          </div>
-
           <div class="file-field input-field">
             <div class="btn">
               <span>File</span>
@@ -40,3 +31,15 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Home",
+  data: () => ({}),
+  mounted() {
+    setTimeout(() => {
+      M.updateTextFields();
+    });
+  }
+};
+</script>
