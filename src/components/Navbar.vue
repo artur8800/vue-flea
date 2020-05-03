@@ -8,10 +8,10 @@
       <div class="nav-user valign-wrapper right">
         <span class="user_name white-text">{{name}}</span>
 
-        <img :src="this.photo" alt class="user_photo circle" />
+        <img :src="this.photo" class="user_photo circle" />
 
-        <a href="#" class="black-text" @click.prevent="logout">
-          <i class="material-icons">assignment_return</i>Выйти
+        <a href="#" class="white-text" @click.prevent="logout">
+          <i class="material-icons">assignment_return</i>
         </a>
         <!-- notice the "circle" class -->
       </div>
@@ -31,9 +31,16 @@ export default {
   computed: {
     ...mapGetters(["userData", "userImage"])
   },
+  methods: {
+    async logout() {
+      await this.$store.dispatch("logout");
+      this.$router.push("/login?message=logout");
+    }
+  },
   async mounted() {
     await this.$store.dispatch("fetchImage");
     await this.$store.dispatch("fetchFromCloud");
+
     this.name = await this.userData;
     this.photo = await this.userImage;
   }

@@ -10,6 +10,7 @@ import tooltipDirective from "@/directives/tooltip.derective";
 import "materialize-css/dist/css/materialize.min.css";
 
 import "materialize-css/dist/js/materialize";
+
 import "@/assets/style.css";
 
 import App from "./App.vue";

@@ -34,9 +34,10 @@ export default {
           url: photo.name,
           dowloadUrl: await firebaseUtil.childImageRef(firebase, uid, photo)
         });
-      } catch (e) {
-        commit("setError", e);
-        throw e;
+      } catch (err) {
+        commit("setError", err);
+        console.log(this);
+        throw err;
       }
     },
     getUid() {
@@ -59,7 +60,6 @@ export default {
     async fetchImage({ dispatch, commit }) {
       try {
         const uid = await dispatch("getUid");
-        console.log();
         let storageRef = await firebaseUtil.profileImageRef(firebase, uid);
         let refList = await storageRef.listAll();
         let fullpath = refList.items[0].getDownloadURL();
@@ -76,6 +76,11 @@ export default {
           commit("setUserData", `${doc.data().name}`);
         });
       });
+    },
+
+    async logout({ commit }) {
+      await firebase.auth().signOut();
+      commit("clearState");
     }
   }
 };

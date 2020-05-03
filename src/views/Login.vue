@@ -59,6 +59,7 @@
 import { email, required, minLength } from "vuelidate/lib/validators";
 
 import messages from "@/utils/messages";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Login",
@@ -75,6 +76,9 @@ export default {
       this.$message(messages[this.$route.query.message]);
     }
   },
+  computed: {
+    ...mapGetters(["errorMessage"])
+  },
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
@@ -87,8 +91,8 @@ export default {
       };
       try {
         await this.$store.dispatch("login", formData);
-        console.log("log");
-        this.$message("You in the system");
+        this.$error = this.errorMessage;
+
         this.$router.push("/");
       } catch (e) {
         console.log(e);

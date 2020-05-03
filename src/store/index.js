@@ -23,11 +23,15 @@ export default new Vuex.Store({
     },
     clearError(state) {
       state.error = null;
+    },
+    clearState(state) {
+      state = {};
     }
   },
   getters: {
     userData: s => s.userData,
-    userImage: s => s.userImage
+    userImage: s => s.userImage,
+    errorMessage: s => s.error
   },
 
   actions: {},

@@ -73,6 +73,7 @@
 
 <script>
 import { email, required, minLength } from "vuelidate/lib/validators";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Register",
@@ -86,6 +87,14 @@ export default {
     email: { email, required },
     password: { required, minLength: minLength(8) },
     name: { required }
+  },
+  mounted() {
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message]);
+    }
+  },
+  computed: {
+    ...mapGetters(["errorMessage"])
   },
   methods: {
     processFile(event) {
@@ -106,10 +115,11 @@ export default {
       try {
         await this.$store.dispatch("register", formData);
         console.log("log");
-        this.$message("You registrated");
+
         this.$router.push("/");
       } catch (e) {
         console.log(e);
+        this.$message(this.errorMessage);
       }
     }
   }

@@ -17,6 +17,7 @@ main {
 
 .user_name {
   padding-right: 12px;
+  font-weight: bold;
 }
 
 .sidenav-trigger,
@@ -27,6 +28,7 @@ main {
 img.user_photo {
   width: 45px;
   height: 45px;
+  box-shadow: -1px 0px 4px 2px rgba(0, 0, 0, .3);
 }
 
 .main__user_info {
@@ -85,4 +87,21 @@ button.login {
 
 div.card.post__container {
   margin-bottom: 6rem;
+}
+
+.nav-user.valign-wrapper {
+  justify-content: flex-end;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  width: 250px;
+}
+
+.nav-user.valign-wrapper a {
+  display: inherit;
+  color: #fff;
+}
+
+.user_photo {
+  margin: 0 40px 0 10px;
 }
