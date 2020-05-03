@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import messages from "@/utils/messages";
 import { email, required, minLength } from "vuelidate/lib/validators";
 import { mapGetters } from "vuex";
 
