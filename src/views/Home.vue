@@ -33,10 +33,22 @@
 </template>
 
 <script>
+import db from "../main";
 export default {
   name: "Home",
   data: () => ({}),
   mounted() {
+    console.log(
+      db
+        .collection("categories")
+        .get()
+        .then(data => {
+          data.docs.map(item => {
+            console.log(item.id);
+          });
+        })
+    );
+
     setTimeout(() => {
       M.updateTextFields();
     });
